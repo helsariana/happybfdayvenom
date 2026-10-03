@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>for venom.</title>
+    
+    <!-- Memuat Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Memuat Font dari Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Quicksand:wght@400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            background-color: #f4eee1; /* Warna beige/krem terang */
+            overflow: hidden; /* Supaya layarnya ga bisa di-scroll */
+            font-family: 'Quicksand', sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .font-surat {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Transisi khusus supaya gambar dan kartu gantinya halus */
+        .transisi-halus {
+            transition: all 0.8s ease-in-out;
+        }
+
+        /* Styling tambahan untuk area kartu ucapan */
+        #gift-card {
+            transition: transform 1s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.8s ease-in-out;
+        }
+    </style>
+</head>
+<body class="relative flex flex-col items-center justify-center p-4">
+
+    <!-- GANTI NAMA FILE MUSIK DI SINI -->
+    <audio id="bg-music" src="musik.mp3" loop></audio>
+
+    <!-- Teks Instruksi -->
+    <div id="text-instructions" class="text-center absolute top-12 sm:top-16 w-full px-4 transisi-halus opacity-100 z-10 text-[#6b6255]">
+        <p class="text-base sm:text-lg mb-1">Ding-dong! ada pakett nih buat the only one cintanya Shèanadin.</p>
+        <p class="text-xs sm:text-sm opacity-70 tracking-widest">[ tekan bunganya biar mekar ]</p>
+    </div>
+
+    <!-- AREA BUKET BUNGA (Bisa di-klik) -->
+    <div id="bouquet-container" class="relative w-64 h-80 sm:w-80 sm:h-96 cursor-pointer z-20 mt-12" onclick="mekarkanBunga()">
+        
+        <!-- BUNGA TAHAP 1 (Paling Kuncup) -->
+        <img id="lily-1" src="kuncup.png" 
+             class="absolute inset-0 w-full h-full object-cover rounded-lg shadow-md transisi-halus opacity-100" alt="Lily 1">
+
+        <!-- BUNGA TAHAP 2 (Mulai Mekar Sedikit) -->
+        <img id="lily-2" src="mekar1.png" 
+             class="absolute inset-0 w-full h-full object-cover rounded-lg shadow-md transisi-halus opacity-0" alt="Lily 2">
+
+        <!-- BUNGA TAHAP 3 (Mekar Setengah) -->
+        <img id="lily-3" src="mekar2.png" 
+             class="absolute inset-0 w-full h-full object-cover rounded-lg shadow-md transisi-halus opacity-0" alt="Lily 3">
+
+        <!-- BUNGA TAHAP 4 (Mekar Sempurna) -->
+        <img id="lily-4" src="mekar3.png" 
+             class="absolute inset-0 w-full h-full object-cover rounded-lg shadow-md transisi-halus opacity-0" alt="Lily 4">
+             
+    </div>
+
+    <!-- KARTU UCAPAN (Awalnya disembunyikan di bawah) -->
+    <div id="gift-card" class="absolute z-30 w-[92%] max-w-lg max-h-[80vh] overflow-y-auto bg-[#fffdf8] p-6 sm:p-8 rounded-sm shadow-2xl border border-[#e6decf] opacity-0 translate-y-16 scale-90 pointer-events-none mt-10">
+        
+        <!-- Hiasan selotip di atas kartu -->
+        <div class="absolute -top-3 left-1/2 -translate-x-1/2 w-16 h-6 bg-[#dfd6c2] opacity-70 rotate-2 z-40 shadow-sm" style="clip-path: polygon(0 10%, 100% 0, 95% 100%, 5% 90%);"></div>
+
+        <!-- Isi Surat -->
+        <div class="font-surat text-[0.95rem] sm:text-[1.055rem] leading-relaxed text-[#463e32] space-y-3">
+            <p>happy bf day to the boy who holds my whole heart. terima kasih ya udah sabar banget hehe, selalu bikin aku happy, dan semangat menjalani hari-hari jelek ini.</p>
+            
+            <p>having you around just makes everything feel so much apa ya istilahnya? hmm so much loved dan lighter? xixi tetep jadi kesayangan aku ya? jangan kemana-mana!</p>
+            
+            <p>semangat juga ya kuliahnya! semoga dilancarkan terus semua urusannya, dimudahkan prosesnya, dan cepet lulus jadi sarjana dengan selamat, sentosa, plus tetap waras, wkwk. i'm endlessly proud of you lho, and i'm so, soooo lucky to call you mine (upcie). let's stay side by side for a really long time, okay? i love you so much!</p>
+            
+            <div class="pt-4">
+                <p>with love,</p>
+                <p class="italic mt-1">your lychee ♡</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Variabel untuk melacak tahap mekar bunga
+        let tahapBunga = 1;
+        const totalTahap = 4;
+        let musikSudahMulai = false;
+
+        function mekarkanBunga() {
+            // Memutar musik pada klik pertama kali
+            if (!musikSudahMulai) {
+                const bgMusic = document.getElementById('bg-music');
+                try {
+                    if (bgMusic.src && !bgMusic.src.endsWith(window.location.pathname)) {
+                        bgMusic.play();
+                    }
+                } catch(e) {
+                    console.log("Audio belum diset atau ada error autoplay browser.");
+                }
+                musikSudahMulai = true;
+            }
+
+            // Jika belum mencapai tahap terakhir (mekar sempurna)
+            if (tahapBunga < totalTahap) {
+                
+                // Hilangkan gambar tahap saat ini
+                document.getElementById(`lily-${tahapBunga}`).classList.replace('opacity-100', 'opacity-0');
+                
+                // Pindah ke tahap selanjutnya
+                tahapBunga++;
+                
+                // Munculkan gambar tahap selanjutnya
+                document.getElementById(`lily-${tahapBunga}`).classList.replace('opacity-0', 'opacity-100');
+
+                // Jika sudah sampai tahap 4 (terakhir), munculkan kartu ucapan
+                if (tahapBunga === totalTahap) {
+                    // 1. Hilangkan teks instruksi yang di atas
+                    document.getElementById('text-instructions').classList.replace('opacity-100', 'opacity-0');
+                    
+                    // 2. Munculkan kartu ucapan dengan delay supaya efeknya dramatis
+                    setTimeout(() => {
+                        const giftCard = document.getElementById('gift-card');
+                        
+                        // Menghapus class yang menyembunyikan kartu
+                        giftCard.classList.remove('opacity-0', 'translate-y-16', 'scale-90', 'pointer-events-none');
+                        
+                        // Menambahkan class untuk memunculkan kartu
+                        giftCard.classList.add('opacity-100', 'translate-y-0', 'scale-100', 'pointer-events-auto');
+                        
+                        // Buat gambar bunganya agak transparan supaya kartunya lebih fokus
+                        document.getElementById('bouquet-container').classList.add('opacity-40');
+                        
+                    }, 1200);
+                }
+            }
+        }
+    </script>
+</body>
+  </html>
